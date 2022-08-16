@@ -86,34 +86,28 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     if (isLastStep) {
       if (currentSteps.find('.failed').length == 0) {
         // No failed steps. Collapse it.
-        currentElement.find('details').prop('open', false);
+        currentElement.find('details').removeAttr('open');
       } else {
         currentElement.find('details').attr('open', 'open');
       }
     }
   };
 
-  this.embedding = function(mimeType, data, name) {
-    var nameHtml;
-    if (!name) {
-      nameHtml = "";
-    } else {
-      nameHtml = "<h4>" + name + "</h4>";
-    }
+  this.embedding = function(mimeType, data) {
     if (currentStepIndex == 1) {
       this.dummyStep();
     }
     if (mimeType.match(/^image\//))
     {
-      currentStep.append(nameHtml + '<img src="' + data + '">');
+      currentStep.append('<img src="' + data + '">');
     }
     else if (mimeType.match(/^video\//))
     {
-      currentStep.append(nameHtml + '<video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video>');
+      currentStep.append('<video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video>');
     }
     else if (mimeType.match(/^text\//))
     {
-      this.write(nameHtml + data);
+      this.write(data);
     }
   };
 
